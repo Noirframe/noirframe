@@ -531,3 +531,48 @@ button, input, select, textarea { border-radius: unset; }
   .date-input:focus { box-shadow: 0 0 0 var(--ring-w) rgba(17,17,17,.18); }
   .disclaimer-link:focus { outline-width: 3px; }
 }
+/* === Mobile Datepicker Fix (paste at end) === */
+
+/* Nichts abschneiden rund um das Feld / Formular */
+.date-field,
+.project-form {
+  overflow: visible !important;
+}
+
+/* Picker sicher über allem anzeigen */
+.datepicker {
+  z-index: 9999 !important;
+  /* Safari/iOS Stabilität */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Auf kleinen Screens als "Modal" mittig und breiter */
+@media (max-width: 520px) {
+  .datepicker {
+    position: fixed !important;
+    left: 50% !important;
+    top: 14vh !important;
+    transform: translate(-50%, 0) !important;
+    width: calc(100vw - 24px) !important; /* Abstand zu den Rändern */
+    max-width: 420px !important;
+  }
+
+  /* Etwas kompaktere Zellen, damit alles reinpasst */
+  .dp-grid { gap: 4px !important; }
+  .dp-cell {
+    height: 34px !important;
+    border-radius: 10px !important;
+    font-size: 14px !important;
+  }
+
+  /* Kopf und Wochentage minimal kleiner */
+  .dp-title { font-size: 14px !important; }
+  .dp-weekdays { font-size: 12px !important; }
+}
+
+/* Falls Buttons/Text überlaufen: braves Box-Modell erzwingen */
+.dp-grid, .dp-cell, .dp-header, .dp-weekdays {
+  box-sizing: border-box;
+}
+
