@@ -670,6 +670,151 @@ button, input, select, textarea { border-radius: unset; }
   content: "🌙";
   left: calc(100% - 24px);
 }
+/* === Apple-Style Black Mode (ohne JS) =======================
+   - nutzt :has() damit KEINE Strukturänderung nötig ist
+   - echte Black/Space Gray Töne, System Blue Akzent
+   - überschreibt auch Inputs/Datepicker-Hintergründe
+   ========================================================== */
+
+/* Schalter-UI (fixed, oben rechts) */
+.theme-toggle{
+  position: fixed; inset: 16px 16px auto auto;
+  width: 54px; height: 30px; z-index: 2000;
+  display: inline-flex; align-items: center; cursor: pointer;
+}
+.theme-slider{
+  position: relative; width: 100%; height: 100%;
+  background: var(--line); border-radius: 999px;
+  transition: background .25s ease, box-shadow .25s ease;
+  box-shadow: 0 4px 14px rgba(0,0,0,.12);
+}
+.theme-slider::before{
+  content: "☀️";
+  position: absolute; inset: 3px auto auto 3px;
+  width: 24px; height: 24px; border-radius: 50%;
+  display: grid; place-items: center; font-size: 13px;
+  background: var(--card); transition: all .25s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,.20);
+}
+#themeSwitch:checked + .theme-slider{ background: #0a84ff; /* iOS System Blue */ }
+#themeSwitch:checked + .theme-slider::before{
+  content: "🌙"; transform: translateX(24px);
+}
+
+/* ---------- Light-Defaults (falls bei dir schon gesetzt, bleibt so) ---------- */
+/* Hier nur zur Orientierung: deine Variablen sind bereits definiert */
+
+/* ---------- DARK: wenn Schalter aktiv ist ---------- */
+html:has(#themeSwitch:checked){
+  /* Apple-like Schwarz & Grautöne */
+  --bg: #000000;
+  --text: #ffffff;
+  --muted: rgba(235,235,245,0.6);      /* iOS Secondary Label */
+  --line: rgba(84,84,88,0.65);          /* iOS Separator on dark */
+  --card: #0a0a0a;                      /* tiefer, aber nicht pures Schwarz für Cards */
+  --primary: #ffffff;
+  --primary-contrast: #000000;
+
+  /* zusätzliche Flächen/Abgrenzungen für Controls */
+  --surface: #111111;                   /* Inputs/Picker Oberfläche */
+  --separator: #2c2c2e;                 /* Feldrahmen */
+}
+
+/* Hintergrund/Text umschalten (ganze Seite) */
+html:has(#themeSwitch:checked) body{
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Card/Form Shell stärker abdunkeln */
+html:has(#themeSwitch:checked) .project-form{
+  background: var(--card);
+  border-color: var(--separator);
+  box-shadow: 0 10px 30px rgba(0,0,0,.45);
+}
+
+/* Links/Muted */
+html:has(#themeSwitch:checked) .intro,
+html:has(#themeSwitch:checked) .ext-link,
+html:has(#themeSwitch:checked) .help,
+html:has(#themeSwitch:checked) .note{
+  color: var(--muted);
+}
+html:has(#themeSwitch:checked) a:hover{ opacity: .9; }
+
+/* Inputs/Select/Textareas + Date-Input auf dunkle Fläche */
+html:has(#themeSwitch:checked) .field input,
+html:has(#themeSwitch:checked) .field select,
+html:has(#themeSwitch:checked) .field textarea,
+html:has(#themeSwitch:checked) .date-input{
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  border-color: var(--separator) !important;
+}
+
+/* Native Select-Pfeile im Dark-Mode dezenter */
+html:has(#themeSwitch:checked) select{
+  background-image:
+    linear-gradient(45deg, transparent 50%, #b5b5b5 50%),
+    linear-gradient(135deg, #b5b5b5 50%, transparent 50%),
+    linear-gradient(to right, transparent, transparent);
+}
+
+/* Focus Ring auf Dark */
+html:has(#themeSwitch:checked) .field input:focus,
+html:has(#themeSwitch:checked) .field select:focus,
+html:has(#themeSwitch:checked) .field textarea:focus,
+html:has(#themeSwitch:checked) .date-input:focus{
+  border-color: #0a84ff !important;
+  box-shadow: 0 0 0 var(--ring-w,3px) rgba(10,132,255,.25) !important;
+}
+
+/* Checkbox-Akzent */
+html:has(#themeSwitch:checked) .checkbox input[type="checkbox"]{
+  accent-color: #0a84ff;
+}
+
+/* Divider/Line */
+html:has(#themeSwitch:checked) .divider{ background: var(--separator); }
+
+/* CTA-Button invertiert (weiß auf schwarz) */
+html:has(#themeSwitch:checked) .cta{
+  background: #fff; color: #000; border-color: #fff;
+  box-shadow: 0 6px 18px rgba(255,255,255,.06);
+}
+html:has(#themeSwitch:checked) .cta:hover{ opacity:.95; }
+
+/* Footer-Ton */
+html:has(#themeSwitch:checked) .footer{ color: var(--muted); }
+
+/* ------- Datepicker auf Dark umstellen ------- */
+html:has(#themeSwitch:checked) .datepicker{
+  background: var(--card);
+  border-color: var(--separator);
+  box-shadow: 0 18px 50px rgba(0,0,0,.6);
+}
+html:has(#themeSwitch:checked) .dp-header .dp-nav,
+html:has(#themeSwitch:checked) .dp-cell,
+html:has(#themeSwitch:checked) .dp-today{
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--separator);
+}
+html:has(#themeSwitch:checked) .dp-cell:hover{ background: #1b1b1b; }
+html:has(#themeSwitch:checked) .dp-cell.outside{ color: #6e6e72; }  /* iOS tertiary */
+
+/* Heute-Markierung & Auswahl im Dark-Style */
+html:has(#themeSwitch:checked) .dp-cell.today{
+  border-color: #0a84ff;
+}
+html:has(#themeSwitch:checked) .dp-cell.selected{
+  background: #0a84ff; color:#fff; border-color:#0a84ff;
+}
+
+/* Weekdays/Textfeinheiten */
+html:has(#themeSwitch:checked) .dp-title{ color: var(--text); }
+html:has(#themeSwitch:checked) .dp-weekdays{ color: var(--muted); }
+
 
 
 
