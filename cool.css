@@ -1,0 +1,533 @@
+/* =========================================================
+   Sutox Project Form — Final Polished CSS (SF Pro only)
+   Matches current HTML (TikTok link, custom budget hint,
+   upload dropzone, Apple-like datepicker)
+   ========================================================= */
+
+/* 0) Design Tokens */
+:root {
+  /* Light */
+  --bg: #ffffff;
+  --text: #0a0a0a;
+  --muted: #6b7280;   /* neutral-500 */
+  --line: #e5e7eb;    /* neutral-200 */
+  --card: #ffffff;
+
+  --primary: #111111;
+  --primary-contrast: #ffffff;
+
+  --accent: #0ea5e9;  /* sky-500 */
+  --accent-600: #0284c7;
+
+  --radius-lg: 14px;
+  --radius: 10px;
+  --ring-w: 3px;
+
+  --shadow-lg: 0 8px 30px rgba(0,0,0,.06);
+  --shadow-pop: 0 12px 40px rgba(0,0,0,.12);
+
+  --dur-fast: .12s;
+  --dur: .15s;
+  --ease: cubic-bezier(.2,.6,.2,1);
+
+  --ff: "SF Pro", -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "SF Pro Display", "Segoe UI", system-ui, Roboto, Arial, sans-serif;
+  --fw-regular: 400;
+  --fw-bold: 700;
+
+  /* Base font-size 16 to prevent iOS input zoom */
+  --fs-base: 16px;
+  --fs-sm: 13px;
+  --fs-md: 14px;
+  --fs-lg: 16px;
+  --fs-xl: clamp(32px, 4vw, 48px);
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b0b0b;
+    --text: #f5f5f5;
+    --muted: #a1a1aa;
+    --line: #262626;
+    --card: #0f0f0f;
+    --shadow-lg: 0 10px 30px rgba(0,0,0,.35);
+    --shadow-pop: 0 18px 50px rgba(0,0,0,.45);
+  }
+}
+
+/* 1) Base / Reset */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-size: var(--fs-base);
+}
+
+html.sf-regular, body, .page {
+  font-family: var(--ff);
+  font-weight: var(--fw-regular);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.sf-bold,
+b, strong,
+h1, h2, h3 { font-weight: var(--fw-bold); }
+
+a {
+  color: inherit;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+a:hover { text-decoration: underline; }
+
+img, video, canvas, svg { max-width: 100%; height: auto; display: block; }
+
+/* A11y helper */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px,1px,1px,1px);
+  white-space: nowrap;
+}
+
+/* Motion respect */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* 2) Layout */
+.page { display: flex; min-height: 100dvh; flex-direction: column; }
+
+.hero, .section {
+  width: 100%;
+  max-width: 980px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+.hero { padding-block: 64px 24px; }
+.hero h1 {
+  font-size: var(--fs-xl);
+  letter-spacing: -0.02em;
+  margin: 0 0 12px 0;
+}
+.hero .intro {
+  margin: 0 0 10px 0;
+  color: var(--muted);
+  font-size: clamp(16px, 1.8vw, 18px);
+}
+.ext-link {
+  margin-top: 8px;
+  font-size: 15px;
+  color: var(--muted);
+}
+.ext-link a {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ext-link a:hover { opacity: .85; }
+
+.section { padding-block: 10px 80px; }
+.section-title { font-size: 22px; margin: 0 0 14px 0; letter-spacing: -0.01em; }
+
+/* 3) Card / Form shell */
+.project-form {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 20px;
+}
+@media (min-width: 720px) { .project-form { padding: 28px; } }
+
+.divider {
+  border: 0;
+  height: 1px;
+  background: var(--line);
+  margin: 20px 0;
+}
+
+/* Grid */
+.grid { display: grid; gap: 14px; }
+.grid--two { grid-template-columns: 1fr; }
+@media (min-width: 720px) {
+  .grid--two { grid-template-columns: 1fr 1fr; }
+}
+
+/* 4) Form fields */
+.field label {
+  display: block;
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-md);
+  margin: 6px 0 6px;
+}
+
+/* Unify controls */
+.field input,
+.field select,
+.field textarea,
+.date-input {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  font: inherit;
+  font-size: var(--fs-lg); /* iOS zoom fix */
+  color: var(--text);
+  outline: none;
+  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.field textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.field input::placeholder,
+.field textarea::placeholder { color: #9ca3af; }
+
+/* Focus ring */
+.field input:focus,
+.field select:focus,
+.field textarea:focus,
+.date-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 var(--ring-w) rgba(17,17,17,.06);
+}
+
+/* Native select arrow */
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #9ca3af 50%),
+    linear-gradient(135deg, #9ca3af 50%, transparent 50%),
+    linear-gradient(to right, transparent, transparent);
+  background-position:
+    calc(100% - 18px) calc(50% - 3px),
+    calc(100% - 12px) calc(50% - 3px),
+    calc(100% - 2.5em) 0.5em;
+  background-size: 6px 6px, 6px 6px, 1px 2.2em;
+  background-repeat: no-repeat;
+  padding-right: 2.6em;
+}
+
+/* Helper text & required star */
+.help { font-size: var(--fs-sm); color: var(--muted); margin-top: 6px; }
+label span[aria-hidden="true"] { color: #ef4444; }
+
+/* Checkbox */
+.checkbox {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: start;
+  gap: 10px;
+  font-size: var(--fs-md);
+  margin-top: 8px;
+}
+.checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 3px;
+  accent-color: var(--primary);
+}
+
+/* Invalid (add .is-invalid to .field when needed) */
+.field.is-invalid input,
+.field.is-invalid select,
+.field.is-invalid textarea,
+.field.is-invalid .date-input {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 var(--ring-w) rgba(239,68,68,.18);
+}
+
+/* 5) Budget section (chip + custom) */
+.label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: var(--fw-bold);
+  background: var(--primary);
+  color: var(--primary-contrast);
+}
+
+.hidden { display: none !important; }
+.reveal { animation: pop .22s var(--ease); }
+@keyframes pop { from { opacity:0; transform: translateY(-4px); } to { opacity:1; transform: none; } }
+
+/* Sky-blue disclaimer link (click -> custom) */
+.disclaimer { margin-top: 6px; margin-bottom: 0; }
+.disclaimer-link {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+.disclaimer-link:hover {
+  color: var(--accent-600);
+  text-decoration-thickness: 1.25px;
+}
+.disclaimer-link:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Currency input with € prefix */
+.currency-input { position: relative; }
+.currency-prefix {
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  pointer-events: none; color: #6b7280; font-weight: var(--fw-bold);
+}
+.currency-input input { padding-left: 28px; }
+
+/* 6) Upload / Dropzone */
+.dropzone {
+  margin-top: 8px;
+  border: 1.5px dashed #bdbdbd;
+  border-radius: var(--radius);
+  padding: 18px;
+  background: #fafafa;
+  cursor: pointer;
+  transition: background var(--dur) var(--ease),
+              border-color var(--dur) var(--ease),
+              box-shadow var(--dur) var(--ease);
+}
+.dropzone:focus { outline: 2px solid var(--primary); outline-offset: 2px; }
+.dropzone.dragover {
+  border-color: var(--primary);
+  background: #f3f4f6;
+  box-shadow: 0 2px 10px rgba(0,0,0,.05);
+}
+.dz-inner { text-align: center; }
+.dz-title { font-size: 15px; margin-bottom: 4px; }
+.dz-sub { font-size: 14px; color: var(--muted); }
+.dz-note { font-size: var(--fs-sm); color: var(--muted); margin-top: 6px; }
+.linklike { background: none; border: 0; padding: 0; color: inherit; text-decoration: underline; cursor: pointer; }
+
+.file-list { list-style: none; margin: 10px 0 0 0; padding: 0; }
+.file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  background: #fff;
+  margin-top: 8px;
+}
+.file-meta { display: flex; gap: 8px; align-items: baseline; }
+.file-name { font-size: 14px; letter-spacing: -.01em; overflow-wrap: anywhere; word-break: break-word; }
+.file-size { font-size: var(--fs-sm); color: var(--muted); }
+.file-remove {
+  background: transparent;
+  border: 1px solid var(--primary);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.file-remove:hover { background: var(--primary); color: var(--primary-contrast); }
+
+/* 7) Apple-like Datepicker */
+.date-field { position: relative; }
+
+.date-input {
+  padding-right: 40px;  /* room for clear button */
+  background: #fff;
+}
+
+.date-clear {
+  position: absolute;
+  right: 8px; top: 50%; transform: translateY(-50%);
+  height: 28px; min-width: 28px;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  font-weight: var(--fw-bold);
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.date-clear:hover { background: var(--primary); color: var(--primary-contrast); border-color: var(--primary); }
+
+.datepicker {
+  position: absolute;
+  z-index: 50;
+  inset-inline-start: 0;
+  margin-top: 8px;
+  width: min(360px, 100%);
+  padding: 10px 10px 8px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow-pop);
+  animation: dp-pop var(--dur-fast) var(--ease);
+}
+@keyframes dp-pop { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+.dp-header {
+  display: grid;
+  grid-template-columns: 40px 1fr 40px;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.dp-title {
+  text-align: center;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+.dp-nav {
+  height: 32px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #fff;
+  cursor: pointer;
+  transition: background var(--dur) var(--ease);
+}
+.dp-nav:hover { background: #f3f4f6; }
+
+.dp-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  padding: 4px 2px 6px;
+  color: var(--muted);
+  font-size: var(--fs-sm);
+  text-align: center;
+}
+
+.dp-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  padding: 0 2px;
+}
+.dp-cell {
+  height: 38px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: #fff;
+  font: inherit;
+  font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  transition: background var(--dur-fast) var(--ease),
+              border-color var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease);
+}
+.dp-cell:hover { background: #f3f4f6; }
+.dp-cell.outside { color: #c0c4cb; }
+.dp-cell.today { border-color: var(--primary); }
+.dp-cell.selected {
+  background: var(--primary);
+  color: var(--primary-contrast);
+  border-color: var(--primary);
+}
+
+.dp-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 2px 2px;
+}
+.dp-today {
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--primary);
+  background: #fff;
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.dp-today:hover { background: var(--primary); color: var(--primary-contrast); }
+
+/* invalid flash from JS */
+.date-invalid .date-input {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 var(--ring-w) rgba(239,68,68,.18);
+}
+
+/* 8) CTA button */
+.cta {
+  margin-top: 16px;
+  width: 100%;
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  color: var(--primary-contrast);
+  padding: 14px 18px;
+  border-radius: 999px;
+  font-weight: var(--fw-bold);
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform .05s var(--ease),
+              opacity var(--dur) var(--ease),
+              box-shadow var(--dur) var(--ease);
+  box-shadow: 0 3px 12px rgba(0,0,0,.08);
+}
+.cta:hover { opacity: .95; }
+.cta:active { transform: translateY(1px); }
+
+/* 9) Footer */
+.footer {
+  max-width: 980px;
+  margin: 40px auto 32px;
+  padding-inline: 20px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* 10) Safety: kill legacy header styles from older snippet */
+header { background: none; color: inherit; text-align: left; padding: 0; }
+header h1 { margin: 0 0 6px 0; }
+.note { color: var(--muted); font-size: 14px; margin-top: 6px; }
+button, input, select, textarea { border-radius: unset; }
+
+/* 11) Small screens tweaks */
+@media (max-width: 380px) {
+  .dp-title { font-size: 14px; }
+  .dp-cell { height: 34px; border-radius: 10px; }
+}
+
+/* 12) High Contrast (optional improvement) */
+@media (prefers-contrast: more) {
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus,
+  .date-input:focus { box-shadow: 0 0 0 var(--ring-w) rgba(17,17,17,.18); }
+  .disclaimer-link:focus { outline-width: 3px; }
+}

@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en" class="sf-regular">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Start a project!</title>
+  <meta name="description" content="If you’re interested in starting a project, select your budget and share details. Let’s bring your vision to life." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="page">
+
+  <!-- Hero / Intro -->
+  <header class="hero">
+    <h1 class="sf-bold">Start a project!</h1>
+    <p class="intro">
+      If you’re interested in starting a project, I'd love to hear from you.
+      Simply select your budget in the form below and let’s explore how we can bring your vision to life. ✌
+    </p>
+
+    <p class="ext-link">
+      Check out my latest work on
+      <a href="https://www.tiktok.com/@jonny.motion?lang=de-DE" target="_blank" rel="noopener" aria-label="Open TikTok profile @jonny.motion in a new tab">
+        TikTok
+      </a>
+    </p>
+  </header>
+
+  <main>
+    <section class="section">
+      <h2 class="section-title sf-bold">Project details</h2>
+
+      <!-- FORM: Web3Forms -->
+      <form
+        class="project-form"
+        id="projectForm"
+        action="https://api.web3forms.com/submit"
+        method="POST"
+        novalidate
+      >
+        <!-- Web3Forms required/optional hidden fields -->
+        <input type="hidden" name="access_key" value="7ec237be-3ab3-41ca-aa3c-9af58b4c8845" />
+        <input type="hidden" name="subject" value="New Project Request via Website" />
+        <input type="hidden" name="from_name" value="Sutox Project Form" />
+        <!-- optional redirect is disabled; we use inline status -->
+        <!-- <input type="hidden" name="redirect" value="https://yourdomain.com/thanks.html" /> -->
+        <!-- spam honeypot (leave empty) -->
+        <input type="checkbox" name="botcheck" class="visually-hidden" tabindex="-1" autocomplete="off" />
+
+        <div class="grid grid--two">
+          <div class="field">
+            <label for="name" class="sf-bold">Name <span aria-hidden="true">*</span></label>
+            <input type="text" id="name" name="name" required autocomplete="name" />
+          </div>
+
+          <div class="field">
+            <label for="email" class="sf-bold">Email <span aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" required autocomplete="email" />
+          </div>
+
+          <div class="field">
+            <label for="company" class="sf-bold">Company name <span aria-hidden="true">*</span></label>
+            <input type="text" id="company" name="company" required autocomplete="organization" />
+          </div>
+
+          <div class="field">
+            <label for="phone" class="sf-bold">Phone</label>
+            <input type="tel" id="phone" name="phone" inputmode="tel" autocomplete="tel" />
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- Budget & specs -->
+        <div class="grid grid--two">
+          <div class="field">
+            <div class="label-row">
+              <label for="budget" class="sf-bold">Select your budget <span aria-hidden="true">*</span></label>
+              <span id="budgetChip" class="chip hidden" aria-live="polite">Custom amount</span>
+            </div>
+
+            <select id="budget" name="budget" required aria-describedby="budgetHelp">
+              <option value="" selected disabled>Select</option>
+              <option value="< €1,000 (custom)">&lt; €1,000 (custom)</option>
+              <option value="€1,000 – €5,000">€1,000 – €5,000</option>
+              <option value="€5,000 – €10,000">€5,000 – €10,000</option>
+              <option value="€10,000+">€10,000+</option>
+            </select>
+
+            <!-- Sky-blue disclaimer-link -->
+            <p class="disclaimer">
+              <button type="button" id="customHint" class="disclaimer-link"
+                title="Click to enter a custom amount under €1,000">
+                Working with a budget under €1,000? Click here to enter a custom amount.
+              </button>
+            </p>
+
+            <p id="budgetHelp" class="help hidden">Set your exact amount below.</p>
+          </div>
+
+          <!-- Custom Budget (only for <1k) -->
+          <div class="field budget-custom hidden" id="budgetCustomWrap">
+            <label for="budget_custom" class="sf-bold">Your exact budget</label>
+            <div class="currency-input">
+              <span aria-hidden="true" class="currency-prefix">€</span>
+              <input
+                type="number"
+                inputmode="decimal"
+                id="budget_custom"
+                name="budget_custom"
+                placeholder="e.g. 750"
+                min="0"
+                step="50"
+                aria-describedby="budgetCustomHelp"
+              />
+            </div>
+            <p class="help" id="budgetCustomHelp">Enter any amount under €1,000. Numbers only.</p>
+          </div>
+
+          <div class="field">
+            <label for="animation-length" class="sf-bold">Animation length <span aria-hidden="true">*</span></label>
+            <select id="animation-length" name="animation_length" required aria-describedby="animCustomHelp">
+              <option value="" selected disabled>Select</option>
+              <option value="15 seconds">15 seconds</option>
+              <option value="30 seconds">30 seconds</option>
+              <option value="1 minute">1 minute</option>
+              <option value="custom">Custom</option>
+            </select>
+            <p id="animCustomHelp" class="help hidden">Set your custom time below.</p>
+          </div>
+
+          <!-- Custom Animation Length -->
+          <div class="field hidden" id="animationCustomWrap">
+            <label for="animation_length_custom" class="sf-bold">Custom duration</label>
+            <input
+              type="text"
+              id="animation_length_custom"
+              name="animation_length_custom"
+              placeholder="e.g. 45 seconds, 90 sec, 1:30 min"
+              aria-describedby="animationCustomNote"
+            />
+            <p class="help" id="animationCustomNote">
+              Use a format like “45 seconds”, “1:30 min”, or “90 sec”.
+            </p>
+          </div>
+
+          <div class="field">
+            <label for="storyboard" class="sf-bold">Is there a storyboard? <span aria-hidden="true">*</span></label>
+            <select id="storyboard" name="storyboard" required>
+              <option value="" selected disabled>Select</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          <!-- Apple-like Date Picker -->
+          <div class="field">
+            <label for="deadlineDisplay" class="sf-bold">Deadline <span aria-hidden="true">*</span></label>
+
+            <div class="date-field" id="deadlineField">
+              <input
+                type="text"
+                id="deadlineDisplay"
+                class="date-input"
+                placeholder="Select date"
+                readonly
+                aria-haspopup="dialog"
+                aria-expanded="false"
+                aria-controls="deadlinePicker"
+              />
+              <!-- Hidden ISO date that is sent to Web3Forms -->
+              <input type="hidden" id="deadline" name="deadline" required />
+
+              <button type="button" class="date-clear" id="deadlineClear" aria-label="Clear date" hidden>×</button>
+
+              <div class="datepicker hidden" id="deadlinePicker" role="dialog" aria-modal="true" aria-label="Pick a date">
+                <div class="dp-header">
+                  <button type="button" class="dp-nav" data-dir="-1" aria-label="Previous month">‹</button>
+                  <div class="dp-title sf-bold" id="dpTitle">Month YYYY</div>
+                  <button type="button" class="dp-nav" data-dir="1" aria-label="Next month">›</button>
+                </div>
+                <div class="dp-weekdays" aria-hidden="true">
+                  <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                </div>
+                <div class="dp-grid" id="dpGrid" role="grid" aria-labelledby="dpTitle"></div>
+                <div class="dp-footer">
+                  <button type="button" class="dp-today">Today</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /Date Picker -->
+        </div>
+
+        <hr class="divider" />
+
+        <!-- Details -->
+        <div class="field">
+          <label for="details" class="sf-bold">Please provide a detailed description of your project. <span aria-hidden="true">*</span></label>
+          <textarea id="details" name="details" rows="8" required placeholder="Ideas, goals, references, example videos…"></textarea>
+        </div>
+
+        <!-- Consent -->
+        <div class="field checkbox">
+          <input type="checkbox" id="consent" name="consent" required />
+        <label for="consent">
+            I agree to the processing of my data in accordance with the
+            <a href="#" class="link">Privacy Policy</a> &amp; <a href="#" class="link">Imprint</a>.
+          </label>
+        </div>
+
+        <!-- Inline status area (success / error) -->
+        <p id="formStatus" class="help" aria-live="polite"></p>
+
+        <!-- Submit -->
+        <button type="submit" id="submitBtn" class="cta sf-bold">
+          Submit request
+        </button>
+      </form>
+      <!-- /FORM -->
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>&copy; <span id="year"></span> — All rights reserved.</small>
+  </footer>
+
+  <script>
+    // simple year injection
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // -------- Budget: select + sky-blue disclaimer link --------
+    (function () {
+      const budgetSelect = document.getElementById('budget');
+      const customWrap   = document.getElementById('budgetCustomWrap');
+      const customInput  = document.getElementById('budget_custom');
+      const budgetChip   = document.getElementById('budgetChip');
+      const budgetHelp   = document.getElementById('budgetHelp');
+      const customHint   = document.getElementById('customHint');
+
+      function isCustomValue(v){ return typeof v === 'string' && v.startsWith('< €1,000'); }
+
+      function applyCustomState(isCustom) {
+        if (isCustom) {
+          customWrap.classList.remove('hidden'); customWrap.classList.add('reveal');
+          customInput.setAttribute('required', 'required');
+          budgetChip.classList.remove('hidden'); budgetHelp.classList.remove('hidden');
+          setTimeout(() => customInput.focus(), 0);
+        } else {
+          customWrap.classList.add('hidden'); customWrap.classList.remove('reveal');
+          customInput.removeAttribute('required'); customInput.value = '';
+          budgetChip.classList.add('hidden'); budgetHelp.classList.add('hidden');
+        }
+      }
+
+      function onSelectChange() {
+        applyCustomState(isCustomValue(budgetSelect.value));
+      }
+
+      // click on the disclaimer -> set <1k> and open custom field
+      customHint.addEventListener('click', () => {
+        if (!isCustomValue(budgetSelect.value)) {
+          budgetSelect.value = '< €1,000 (custom)';
+          budgetSelect.dispatchEvent(new Event('change', { bubbles: true }));
+        } else {
+          applyCustomState(true);
+        }
+      });
+
+      budgetSelect.addEventListener('change', onSelectChange);
+      onSelectChange();
+    })();
+
+    // -------- Animation Length: handle custom option --------
+    (function () {
+      const animSelect = document.getElementById('animation-length');
+      const customWrap = document.getElementById('animationCustomWrap');
+      const customInput = document.getElementById('animation_length_custom');
+      const animHelp = document.getElementById('animCustomHelp');
+
+      function applyAnimState() {
+        const isCustom = animSelect.value === 'custom';
+        if (isCustom) {
+          customWrap.classList.remove('hidden');
+          customInput.setAttribute('required', 'required');
+          animHelp.classList.remove('hidden');
+          setTimeout(() => customInput.focus(), 0);
+        } else {
+          customWrap.classList.add('hidden');
+          customInput.removeAttribute('required');
+          customInput.value = '';
+          animHelp.classList.add('hidden');
+        }
+      }
+
+      animSelect.addEventListener('change', applyAnimState);
+      applyAnimState(); // init on load
+    })();
+
+    // -------- Apple-like Date Picker --------
+    (function () {
+      const display = document.getElementById('deadlineDisplay');
+      const hidden  = document.getElementById('deadline');
+      const picker  = document.getElementById('deadlinePicker');
+      const clearBtn= document.getElementById('deadlineClear');
+      const grid    = document.getElementById('dpGrid');
+      const titleEl = document.getElementById('dpTitle');
+      const field   = document.getElementById('deadlineField');
+
+      const WEEK_START = 1; // Monday
+      let view = new Date(); view.setHours(12,0,0,0);
+      let selected = null;
+
+      function fmtDisplay(d){
+        return new Intl.DateTimeFormat('en-GB', { weekday:'short', day:'2-digit', month:'short', year:'numeric'}).format(d);
+      }
+      function fmtISO(d){
+        const y = d.getFullYear();
+        const m = String(d.getMonth()+1).padStart(2,'0');
+        const day = String(d.getDate()).padStart(2,'0');
+        return `${y}-${m}-${day}`;
+      }
+      function startOfMonth(d){ return new Date(d.getFullYear(), d.getMonth(), 1, 12); }
+      function addMonths(d, n){ return new Date(d.getFullYear(), d.getMonth()+n, 1, 12); }
+      function getMonthMatrix(d){
+        const start = startOfMonth(d);
+        const firstDay = (start.getDay() + 7 - WEEK_START) % 7;
+        const daysInMonth = new Date(d.getFullYear(), d.getMonth()+1, 0).getDate();
+        const cells = [];
+        for (let i=0;i<firstDay;i++){
+          const dt = new Date(d.getFullYear(), d.getMonth(), -i, 12);
+          cells.unshift({ date: dt, outside:true });
+        }
+        for (let i=1;i<=daysInMonth;i++){
+          cells.push({ date: new Date(d.getFullYear(), d.getMonth(), i, 12), outside:false });
+        }
+        while (cells.length % 7 !== 0) {
+          const last = cells[cells.length-1].date;
+          cells.push({ date: new Date(last.getFullYear(), last.getMonth(), last.getDate()+1, 12), outside:true });
+        }
+        while (cells.length < 42) {
+          const last = cells[cells.length-1].date;
+          cells.push({ date: new Date(last.getFullYear(), last.getMonth(), last.getDate()+1, 12), outside:true });
+        }
+        return cells;
+      }
+      function sameDay(a,b){ return a && b && a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate(); }
+
+      function render(){
+        titleEl.textContent = new Intl.DateTimeFormat('en-GB',{ month:'long', year:'numeric'}).format(view);
+        grid.innerHTML = '';
+        const cells = getMonthMatrix(view);
+        const today = new Date(); today.setHours(12,0,0,0);
+
+        cells.forEach((cell) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'dp-cell';
+          b.textContent = String(cell.date.getDate()).padStart(2,'0');
+          b.dataset.iso = fmtISO(cell.date);
+          b.setAttribute('role','gridcell');
+          b.setAttribute('tabindex','-1');
+
+          if (cell.outside) b.classList.add('outside');
+          if (sameDay(cell.date, today)) b.classList.add('today');
+          if (selected && sameDay(cell.date, selected)) b.classList.add('selected');
+
+          b.addEventListener('click', () => {
+            selected = cell.date;
+            hidden.value = fmtISO(selected);
+            display.value = fmtDisplay(selected);
+            clearBtn.hidden = false;
+            closePicker();
+          });
+
+          grid.appendChild(b);
+        });
+
+        const inMonthFirst = Array.from(grid.querySelectorAll('.dp-cell:not(.outside)'))[0];
+        if (inMonthFirst) inMonthFirst.tabIndex = 0;
+      }
+
+      function openPicker(){
+        picker.classList.remove('hidden');
+        display.setAttribute('aria-expanded','true');
+        render();
+        const target = selected
+          ? Array.from(grid.children).find(el => el.dataset.iso === fmtISO(selected))
+          : grid.querySelector('.dp-cell:not(.outside)');
+        if (target) target.focus();
+        document.addEventListener('mousedown', onDocDown);
+        document.addEventListener('keydown', onKey);
+      }
+      function closePicker(){
+        picker.classList.add('hidden');
+        display.setAttribute('aria-expanded','false');
+        display.focus();
+        document.removeEventListener('mousedown', onDocDown);
+        document.removeEventListener('keydown', onKey);
+      }
+      function togglePicker(){ picker.classList.contains('hidden') ? openPicker() : closePicker(); }
+      function onDocDown(e){ if (!field.contains(e.target)) closePicker(); }
+
+      function moveFocus(delta){
+        const cells = Array.from(grid.querySelectorAll('.dp-cell'));
+        let idx = cells.findIndex(c => c === document.activeElement);
+        if (idx === -1) idx = cells.findIndex(c => !c.classList.contains('outside'));
+        idx = Math.max(0, Math.min(cells.length-1, idx + delta));
+        cells[idx].focus();
+      }
+      function onKey(e){
+        if (picker.classList.contains('hidden')) return;
+        switch (e.key) {
+          case 'Escape': e.preventDefault(); closePicker(); break;
+          case 'ArrowLeft': e.preventDefault(); moveFocus(-1); break;
+          case 'ArrowRight': e.preventDefault(); moveFocus(1); break;
+          case 'ArrowUp': e.preventDefault(); moveFocus(-7); break;
+          case 'ArrowDown': e.preventDefault(); moveFocus(7); break;
+          case 'Enter':
+            if (document.activeElement.classList.contains('dp-cell')) {
+              document.activeElement.click();
+            }
+            break;
+        }
+      }
+
+      picker.querySelectorAll('.dp-nav').forEach(btn => {
+        btn.addEventListener('click', () => {
+          view = addMonths(view, parseInt(btn.dataset.dir, 10));
+          render();
+          const first = grid.querySelector('.dp-cell:not(.outside)');
+          if (first) first.focus();
+        });
+      });
+      picker.querySelector('.dp-today').addEventListener('click', () => {
+        const t = new Date(); t.setHours(12,0,0,0);
+        view = new Date(t.getFullYear(), t.getMonth(), 1, 12);
+        selected = t;
+        hidden.value = fmtISO(selected);
+        display.value = fmtDisplay(selected);
+        clearBtn.hidden = false;
+        closePicker();
+      });
+
+      display.addEventListener('click', togglePicker);
+      display.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); togglePicker(); }
+      });
+
+      clearBtn.addEventListener('click', () => {
+        selected = null;
+        hidden.value = '';
+        display.value = '';
+        clearBtn.hidden = true;
+        display.focus();
+      });
+
+      field.closest('form').addEventListener('submit', (e) => {
+        if (!hidden.value) {
+          e.preventDefault();
+          openPicker();
+          field.classList.add('date-invalid');
+          setTimeout(() => field.classList.remove('date-invalid'), 600);
+        }
+      });
+
+      if (hidden.value) {
+        const parts = hidden.value.split('-');
+        if (parts.length === 3) {
+          const d = new Date(Number(parts[0]), Number(parts[1])-1, Number(parts[2]), 12);
+          selected = d; view = new Date(d.getFullYear(), d.getMonth(), 1, 12);
+          display.value = fmtDisplay(d); clearBtn.hidden = false;
+        }
+      }
+    })();
+
+    // -------- Web3Forms Submit (AJAX) — CORS-safe (JSON only, no uploads) --------
+    (function () {
+      const form      = document.getElementById('projectForm');
+      const statusEl  = document.getElementById('formStatus');
+      const submitBtn = document.getElementById('submitBtn');
+
+      function buildBudgetFinal() {
+        const sel = document.getElementById('budget').value || '';
+        const custom = document.getElementById('budget_custom').value || '';
+        if (sel.startsWith('< €1,000') && custom) return `Under €1,000 — custom: €${custom}`;
+        return sel || (custom ? `Custom: €${custom}` : '');
+      }
+
+      function buildAnimationLengthFinal() {
+        const sel = document.getElementById('animation-length').value || '';
+        const custom = (document.getElementById('animation_length_custom').value || '').trim();
+        if (sel === 'custom' && custom) return `Custom: ${custom}`;
+        return sel;
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Basic client-side checks
+        const deadline = document.getElementById('deadline').value;
+        if (!deadline) {
+          statusEl.textContent = "Please select a deadline.";
+          return;
+        }
+        // If custom animation is selected, ensure non-empty value (extra guard; input is required anyway)
+        const animSel = document.getElementById('animation-length').value;
+        const animCustom = (document.getElementById('animation_length_custom').value || '').trim();
+        if (animSel === 'custom' && !animCustom) {
+          statusEl.textContent = "Please enter your custom animation duration.";
+          document.getElementById('animation_length_custom').focus();
+          return;
+        }
+
+        // UI state
+        submitBtn.disabled = true;
+        const originalLabel = submitBtn.textContent;
+        submitBtn.textContent = 'Sending…';
+        statusEl.textContent = '';
+
+        try {
+          // collect as plain object (no files)
+          const plain = Object.fromEntries(new FormData(form).entries());
+
+          // enrich/normalize fields
+          plain.budget                    = document.getElementById('budget').value || '';
+          plain.budget_final              = buildBudgetFinal();
+          plain.animation_length          = document.getElementById('animation-length').value || '';
+          plain.animation_length_final    = buildAnimationLengthFinal();
+          const name                      = (document.getElementById('name').value || '').trim();
+          plain.subject                   = `New Project Request — ${name || 'Website'}`;
+
+          const res = await fetch(form.action, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify(plain)
+          });
+
+          let text = await res.text();
+          let json;
+          try { json = text ? JSON.parse(text) : {}; } catch { json = { success: false, message: text }; }
+
+          if (res.ok && (json.success === true || res.status === 200)) {
+            statusEl.textContent = 'Thanks! Your request was sent successfully. I will get back to you by email.';
+            form.reset();
+
+            // reset custom UI bits
+            document.getElementById('budgetChip').classList.add('hidden');
+            document.getElementById('budgetHelp').classList.add('hidden');
+            document.getElementById('budgetCustomWrap').classList.add('hidden');
+
+            document.getElementById('animationCustomWrap').classList.add('hidden');
+            document.getElementById('animCustomHelp').classList.add('hidden');
+
+            document.getElementById('deadlineDisplay').value = '';
+            document.getElementById('deadlineClear').hidden = true;
+
+            // Optional redirect
+            // window.location.href = "/success.html";
+          } else {
+            const msg = (json && json.message) || ('HTTP ' + res.status + (text ? (': ' + text) : ''));
+            statusEl.textContent = msg || 'Something went wrong. Please try again in a moment.';
+          }
+        } catch (err) {
+          statusEl.textContent = 'Network error. Please try again.';
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalLabel;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
