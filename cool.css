@@ -575,4 +575,32 @@ button, input, select, textarea { border-radius: unset; }
 .dp-grid, .dp-cell, .dp-header, .dp-weekdays {
   box-sizing: border-box;
 }
+/* === Mobile Datepicker Zahl-Alignment Fix (einfügen am Ende) === */
+.dp-grid { min-width: 0; }
+
+.dp-cell {
+  /* Button-Defaults killen, damit iOS/Safari keine Extra-Padding/Typo-Shift macht */
+  -webkit-appearance: none;
+  appearance: none;
+
+  /* exakte Zentrierung der Ziffern */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  /* sauberes Typo-Boxmodell für Zahlen */
+  line-height: 1 !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+  font-variant-numeric: tabular-nums !important; /* gleichbreite Ziffern */
+}
+
+/* auf sehr kleinen Screens die Zellen minimal kompakter halten */
+@media (max-width: 520px) {
+  .dp-cell {
+    height: 34px !important;
+    font-size: 14px !important;
+  }
+}
+
 
